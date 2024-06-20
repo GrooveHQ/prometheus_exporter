@@ -35,8 +35,12 @@ module PrometheusExporter::Server
     end
 
     def process_hash(obj)
+      p 'process_hash'
       @mutex.synchronize do
+        p obj
+        p @collectors
         if collector = @collectors[obj["type"]]
+          p collector
           collector.collect(obj)
         else
           metric = @metrics[obj["name"]]
